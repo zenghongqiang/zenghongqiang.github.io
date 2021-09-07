@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zenghongqiang.github.io</id>
     <title>Gridea</title>
-    <updated>2021-09-07T07:09:52.513Z</updated>
+    <updated>2021-09-07T07:13:15.869Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zenghongqiang.github.io"/>
     <link rel="self" href="https://zenghongqiang.github.io/atom.xml"/>
@@ -17,7 +17,9 @@
         </link>
         <updated>2021-09-07T07:02:49.000Z</updated>
         <content type="html"><![CDATA[<p>如果 composer 显示 proc_open() 则在某些命令上失败:</p>
-<pre><code>PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open():   fork failed - Cannot allocate memory' in phar
+<pre><code>PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open():  
+fork failed - Cannot allocate memory' in phar
+
 </code></pre>
 <p>这可能会发生，因为 VPS 内存不足，并且没有启用交换空间。</p>
 <pre><code>free -m
