@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Hello Gridea | Gridea</title>
+<title>Composer proc_open (): 分支失败错误 | Gridea</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,15 +18,9 @@
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="如果 composer 显示 proc_open() 则在某些命令上失败:
+PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open():   ..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -97,45 +91,46 @@ Gridea 主页
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Hello Gridea</h2>
-            <div class="post-date">2018-12-12</div>
-            
-              <div class="feature-container" style="background-image: url('https://zenghongqiang.github.io/post-images/hello-gridea.png')">
-              </div>
+            <h2 class="post-title">Composer proc_open (): 分支失败错误</h2>
+            <div class="post-date">2021-09-07</div>
             
             <div class="post-content" v-pre>
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+              <p>如果 composer 显示 proc_open() 则在某些命令上失败:</p>
+<pre><code>PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open():   fork failed - Cannot allocate memory' in phar
+</code></pre>
+<p>这可能会发生，因为 VPS 内存不足，并且没有启用交换空间。</p>
+<pre><code>free -m
+
+total used free shared buffers cached
+Mem: 2048 357 1690 0 0 237
+-/+ buffers/cache: 119 1928
+Swap: 0 0 0
+</code></pre>
+<p>若要启用交换，您可以使用例如：</p>
+<pre><code>/bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+/sbin/mkswap /var/swap.1
+/sbin/swapon /var/swap.1
+</code></pre>
+<p>永久交换文件<br>
+我们最近的更改已为当前会话启用了交换文件。但是，如果重新启动，服务器将不会自动保留交换设置。我们可以通过将交换文件添加到文件中来进行/etc/fstab更改。</p>
+<p>备份/etc/fstab文件，以防出现任何问题：</p>
+<pre><code>sudo cp /etc/fstab /etc/fstab.bak
+</code></pre>
+<p>/etc/fstab通过输入以下命令将交换文件信息添加到文件末尾：</p>
+<pre><code>echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+</code></pre>
 
             </div>
             
-              <div class="tag-container">
-                
-                  <a href="https://zenghongqiang.github.io/tag/hB9fh9U_V/" class="tag">
-                    Gridea
-                  </a>
-                
-              </div>
             
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zenghongqiang.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
             
 
             
