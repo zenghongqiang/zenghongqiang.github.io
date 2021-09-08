@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zenghongqiang.github.io</id>
     <title>Gridea</title>
-    <updated>2021-09-07T07:13:15.869Z</updated>
+    <updated>2021-09-08T14:10:41.154Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zenghongqiang.github.io"/>
     <link rel="self" href="https://zenghongqiang.github.io/atom.xml"/>
@@ -10,6 +10,120 @@
     <logo>https://zenghongqiang.github.io/images/avatar.png</logo>
     <icon>https://zenghongqiang.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[动态显存 和 0xE2 修复]]></title>
+        <id>https://zenghongqiang.github.io/post/dong-tai-xian-cun-he-0xe2-xiu-fu/</id>
+        <link href="https://zenghongqiang.github.io/post/dong-tai-xian-cun-he-0xe2-xiu-fu/">
+        </link>
+        <updated>2021-09-08T13:55:25.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="简介">简介</h2>
+<p><strong>仅支持 MX150！</strong></p>
+<ol start="0">
+<li>
+<p><strong>非常重要! 只在 BIOS 0603 测试过该脚本。 @FallenChromium 和 Cyb 对任何损坏均不负责，虽然由他们制作脚本，但你需要个人承担风险。</strong></p>
+<ul>
+<li>经个人测试，0906 BIOS 依然有效</li>
+<li>经本人测试，小米笔记本Air 13.3（第7代CPU平台驱动 指纹版）1B13 依然有效</li>
+</ul>
+</li>
+<li>
+<p><strong>重要 - 用 <code>backup.cmd</code> 制作备份，把生成的 <code>mybackup.bin</code> 保存在云端。这是个理论上可行但不稳定的恢复方案。</strong></p>
+</li>
+<li>
+<p>在进行任意操作之前，确保你的 Windows 设备允许运行 PowerShell 脚本。更多信息在<a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-6">这里</a>。我把所有的 policy (CurrentUser 和其他) 设成了 Unrestricted。做了这个操作后我的脚本才运行正常。</p>
+</li>
+<li>
+<p>在对 BIOS 做进一步修改之前运行 <code>bios_unlock.cmd</code>。</p>
+</li>
+<li>
+<p>运行 <code>DVMT_set.cmd</code> 让动态显存=64mb。你需要重启否则脚本将不会生效。你不能一股脑运行完所有脚本再重启，因为只有关机前最后一个脚本生效。</p>
+</li>
+<li>
+<p>运行 <code>CFG_unlock.cmd</code>，再次重启。</p>
+</li>
+<li>
+<p>运行 <code>bios_lock.cmd</code> 来给 BIOS 重新上锁，让电脑更安全。</p>
+</li>
+<li>
+<p>删除动态显存补丁并修改 <code>framebuffer-flags</code>。</p>
+</li>
+</ol>
+<ul>
+<li><strong>如果你是 Clover 或 OC 用户：</strong>
+<ul>
+<li>打开 <code>/EFI/CLOVER (或者 OC)/config.plist</code>，删除以下代码：</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-xml">    &lt;key&gt;framebuffer-fbmem&lt;/key&gt;
+    &lt;data&gt;AACQAA==&lt;/data&gt;
+    &lt;key&gt;framebuffer-stolenmem&lt;/key&gt;
+    &lt;data&gt;AAAwAQ==&lt;/data&gt;
+</code></pre>
+<ul>
+<li>然后修改 <code>framebuffer-flags</code> 来开启 <code>FBEnableDynamicCDCLK</code></li>
+</ul>
+<pre><code class="language-diff">    &lt;key&gt;framebuffer-flags&lt;/key&gt;
+-   &lt;data&gt;CwfDAA==&lt;/data&gt;
++   &lt;data&gt;CwfjAA==&lt;/data&gt;
+</code></pre>
+<ul>
+<li>可选，更改 <code>ig-platform-id</code> 为 <code>0x05001c59</code>（macOS 版本高于 10.14）来提升显卡表现</li>
+</ul>
+<pre><code class="language-diff">    &lt;key&gt;AAPL,ig-platform-id&lt;/key&gt;
+-   &lt;data&gt;AAAWWQ==&lt;/data&gt;
++   &lt;data&gt;BQAcWQ==&lt;/data&gt;
+    &lt;key&gt;AAPL,slot-name&lt;/key&gt;
+    &lt;string&gt;Internal&lt;/string&gt;
+    &lt;key&gt;complete-modeset-framebuffers&lt;/key&gt;
+    &lt;data&gt;AAAAAAAAAAE=&lt;/data&gt;
+    &lt;key&gt;device-id&lt;/key&gt;
+    &lt;data&gt;FlkAAA==&lt;/data&gt;
+    &lt;key&gt;force-online&lt;/key&gt;
+    &lt;data&gt;AQAAAA==&lt;/data&gt;
+    &lt;key&gt;force-online-framebuffers&lt;/key&gt;
+    &lt;data&gt;AAAAAAAAAAE=&lt;/data&gt;
+-   &lt;key&gt;framebuffer-con0-enable&lt;/key&gt;
+-   &lt;data&gt;AQAAAA==&lt;/data&gt;
+-   &lt;key&gt;framebuffer-con0-flags&lt;/key&gt;
+-   &lt;data&gt;mAQAAA==&lt;/data&gt;
+    &lt;key&gt;framebuffer-con1-enable&lt;/key&gt;
+    &lt;data&gt;AQAAAA==&lt;/data&gt;
+-   &lt;key&gt;framebuffer-con1-flags&lt;/key&gt;
+-   &lt;data&gt;xwMAAA==&lt;/data&gt;
+    &lt;key&gt;framebuffer-con1-pipe&lt;/key&gt;
+    &lt;data&gt;CgAAAA==&lt;/data&gt;
+    &lt;key&gt;framebuffer-con1-type&lt;/key&gt;
+    &lt;data&gt;AAgAAA==&lt;/data&gt;
+    &lt;key&gt;framebuffer-con2-enable&lt;/key&gt;
+    &lt;data&gt;AQAAAA==&lt;/data&gt;
+-   &lt;key&gt;framebuffer-con2-flags&lt;/key&gt;
+-   &lt;data&gt;xwMAAA==&lt;/data&gt;
+</code></pre>
+<ol start="8">
+<li>禁用 MSR 0xE2 补丁。</li>
+</ol>
+<ul>
+<li>如果是 Clover 用户，更改以下代码来禁用 MSR 0xE2 补丁：</li>
+</ul>
+<pre><code class="language-diff">    &lt;key&gt;KernelPm&lt;/key&gt;
+-   &lt;true/&gt;
++   &lt;false/&gt;
+</code></pre>
+<ul>
+<li>如果是 OC 用户，更改以下代码来禁用 MSR 0xE2 补丁：</li>
+</ul>
+<pre><code class="language-diff">    &lt;key&gt;AppleXcpmCfgLock&lt;/key&gt;
+-   &lt;true/&gt;
++   &lt;false/&gt;
+</code></pre>
+<h2 id="鸣谢">鸣谢</h2>
+<ul>
+<li>感谢 <a href="https://github.com/FallenChromium">FallenChromium</a> 和 <a href="http://4pda.ru/forum/index.php?showuser=914121">Cyb</a> 制作脚本和说明。</li>
+<li>原帖地址:https://github.com/daliansky/XiaoMi-Pro-Hackintosh/blob/main/BIOS/TM1701/DVMT_and_0xE2_fix/README_CN.md</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Composer proc_open (): 分支失败错误]]></title>
         <id>https://zenghongqiang.github.io/post/composer-proc_open-fen-zhi-shi-bai-cuo-wu/</id>
@@ -19,7 +133,6 @@
         <content type="html"><![CDATA[<p>如果 composer 显示 proc_open() 则在某些命令上失败:</p>
 <pre><code>PHP Fatal error: Uncaught exception 'ErrorException' with message 'proc_open():  
 fork failed - Cannot allocate memory' in phar
-
 </code></pre>
 <p>这可能会发生，因为 VPS 内存不足，并且没有启用交换空间。</p>
 <pre><code>free -m
